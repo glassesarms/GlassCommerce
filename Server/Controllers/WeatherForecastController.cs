@@ -1,4 +1,3 @@
-using GlassCommerce.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GlassCommerce.Server.Controllers
