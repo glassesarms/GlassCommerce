@@ -6,15 +6,6 @@
     transition: transform .2s;
 }
 
-.media {
-    display: flex;
-    align-items: flex-start;
-}
-
-.media-body {
-    flex: 1;
-}
-
 .media-img:hover {
     transform: scale(1.1);
 }

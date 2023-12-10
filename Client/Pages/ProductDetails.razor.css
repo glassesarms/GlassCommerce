@@ -11,9 +11,13 @@
     text-align: center;
 }
 
-@media(max-widt: 1023.98px){
+@media(max-width: 1023.98px){
     .media-img{
         max-width: 300px;
+    }
+
+    .media {
+        flex-direction: column;
     }
 
     .media-img-wrapper{
