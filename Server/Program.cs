@@ -1,6 +1,6 @@
 global using GlassCommerce.Shared;
 global using Microsoft.EntityFrameworkCore;
-using GlassCommerce.Server.Data;
+global using GlassCommerce.Server.Data;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
