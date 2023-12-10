@@ -1,7 +1,4 @@
-﻿using GlassCommerce.Server.Data;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace GlassCommerce.Server.Controllers
 {
@@ -19,7 +16,7 @@ namespace GlassCommerce.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetProduct()
         {
-            var products = await _context.Products.ToListAsync(); 
+            var products = await _context.Products.ToListAsync();
             return Ok(products);
         }
     }
