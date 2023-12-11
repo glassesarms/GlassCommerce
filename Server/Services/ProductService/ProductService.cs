@@ -104,5 +104,18 @@
                                 .Include(p => p.Variants)
                                 .ToListAsync();
         }
+
+        public async Task<ServiceResponse<List<Product>>> GetFeaturedProductsAsync()
+        {
+            var response = new ServiceResponse<List<Product>>
+            {
+                Data = await _context.Products
+                    .Where(p => p.Featured)
+                    .Include(p => p.Variants)
+                    .ToListAsync()
+            };
+
+            return response;
+        }
     }
 }
