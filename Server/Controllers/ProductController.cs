@@ -34,10 +34,10 @@ namespace GlassCommerce.Server.Controllers
             return Ok(result);
         }
 
-        [HttpGet("search/{searchText}")]
-        public async Task<ActionResult<ServiceResponse<Product>>> SearchProducts(string searchText)
+        [HttpGet("search/{searchText}/{page}")]
+        public async Task<ActionResult<ProductSearchResultDTO>> SearchProducts(string searchText, int page = 1)
         {
-            var result = await _productService.SearchProductsAsync(searchText);
+            var result = await _productService.SearchProductsAsync(searchText, page);
             return Ok(result);
         }
 
