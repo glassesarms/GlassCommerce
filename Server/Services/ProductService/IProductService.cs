@@ -5,6 +5,7 @@
         Task<ServiceResponse<List<Product>>> GetProductsAsync();
         Task<ServiceResponse<Product>> GetProductAsync(int productId);
         Task<ServiceResponse<List<Product>>> GetProductsByCategoryAsync(string categoryUrl);
-        Task<ServiceResponse<List<Product>>> SearchProducts(string searchText);
+        Task<ServiceResponse<List<Product>>> SearchProductsAsync(string searchText);
+        Task<ServiceResponse<List<String>>> GetProductSearchSuggestionsAsync(string searchText);
     }
 }
