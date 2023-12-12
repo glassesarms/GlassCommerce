@@ -1,8 +1,9 @@
 ﻿@inject IProductService ProductService
+@implements IDisposable
 
 @if(ProductService.Products == null || ProductService.Products.Count == 0)
 {
-    <span>Loading Products...</span>
+    <span>@ProductService.Message</span>
 }
 else
 {
@@ -11,27 +12,57 @@ else
         {
             <li class="media my-3">
                 <div class="media-img-wrapper mr-2">
-                    <a href="#">
+                    <a href="/product/@product.Id">
                         <img class="media-img" src="@product.ImageUrl" alt="Cover of @product.Title" />
                     </a>
                 </div>
                 <div class="media-body">
-                    <a href="#">
+                    <a href="/product/@product.Id">
                         <h4 class="mb-0">@product.Title</h4>
                     </a>
                     <p>@product.Description</p>
                     <h5 class="price">
-                        $@product.Price
+                        @GetPriceText(product)
                     </h5>
                 </div>
             </li>
         }
     </ul>
+    if(ProductService.PageCount > 1)
+    {
+        for (var i = 1; i <= ProductService.PageCount; i++)
+        {
+            <a class="btn
+                @(i == ProductService.CurrentPage ? "btn-info" : "btn-outline-info")
+                page-selection"
+               href="/search/@ProductService.LastSearchText/@i">@i</a>
+        }
+    }
 }
 
 @code {
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        await ProductService.GetProducts();
+        ProductService.ProductsChanged += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        ProductService.ProductsChanged -= StateHasChanged;
+    }
+
+    private string GetPriceText(Product product)
+    {
+        var variants = product.Variants;
+        if(variants.Count == 0)
+        {
+            return string.Empty;
+        }
+        else if(variants.Count == 1)
+        {
+            return $"${variants[0].Price}";
+        }
+        decimal minPrice = variants.Min(v => v.Price);
+        return $"Starting at ${minPrice}";
     }
 }

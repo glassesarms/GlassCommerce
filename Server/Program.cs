@@ -2,6 +2,8 @@ global using GlassCommerce.Shared;
 global using Microsoft.EntityFrameworkCore;
 global using GlassCommerce.Server.Data;
 global using GlassCommerce.Server.Services.ProductService;
+global using GlassCommerce.Server.Services.CategoryService;
+global using GlassCommerce.Server.Services.CartService;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +21,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 var app = builder.Build();
 
