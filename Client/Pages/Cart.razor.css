@@ -35,3 +35,7 @@
     font-weight: 600;
     text-align: right;
 }
+
+.input-quantity {
+    width: 70px;
+}

@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using GlassCommerce.Shared;
 
 namespace GlassCommerce.Client.Services.CartService
 {
@@ -22,7 +23,18 @@ namespace GlassCommerce.Client.Services.CartService
             {
                 cart = new List<CartItem>();
             }
-            cart.Add(cartItem);
+
+            var sameItem = cart.Find(x => x.ProductId == cartItem.ProductId
+                && x.ProductTypeId == cartItem.ProductTypeId);
+
+            if(sameItem == null)
+            {
+                cart.Add(cartItem);
+            } 
+            else
+            {
+                sameItem.Quantity += cartItem.Quantity;
+            }
 
             await _localStorage.SetItemAsync("cart", cart);
             OnChange.Invoke();
@@ -67,6 +79,26 @@ namespace GlassCommerce.Client.Services.CartService
             cart.Remove(cartItem);
             await _localStorage.SetItemAsync("cart", cart);
             OnChange.Invoke();
+        }
+
+        public async Task UpdateQuantity(CartProductDTO product)
+        {
+            var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
+            if (cart == null)
+            {
+                return;
+            }
+
+            var cartItem = cart.Find(x => x.ProductId == product.ProductId
+                && x.ProductTypeId == product.ProductTypeId);
+
+            if (cartItem == null)
+            {
+                return;
+            }
+
+            cartItem.Quantity = product.Quantity;
+            await _localStorage.SetItemAsync("cart", cart);
         }
     }
 }
