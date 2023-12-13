@@ -49,5 +49,19 @@ namespace GlassCommerce.Server.Controllers
             var result = await _cartService.AddToCartAsync(cartItem);
             return Ok(result);
         }
+
+        [HttpPut("update-quantity")]
+        public async Task<ActionResult<ServiceResponse<bool>>> UpdateQuantity(CartItem cartItem)
+        {
+            var result = await _cartService.UpdateQuantityAsync(cartItem);
+            return Ok(result);
+        }
+
+        [HttpDelete("{productId}/{productTypeId}")]
+        public async Task<ActionResult<ServiceResponse<bool>>> RemoveItemFromCart(int productId, int productTypeId)
+        {
+            var result = await _cartService.RemoveItemFromCartAsync(productId, productTypeId);
+            return Ok(result);
+        }
     }
 }
