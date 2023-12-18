@@ -75,11 +75,16 @@ namespace GlassCommerce.Server.Services.CartService
             return new ServiceResponse<int> { Data = count };
         }
 
-        public async Task<ServiceResponse<List<CartProductDTO>>> GetDbCartProducts()
+        public async Task<ServiceResponse<List<CartProductDTO>>> GetDbCartProducts(int? userId = null)
         {
+            if(userId == null)
+            {
+                userId = _authService.GetUserId();
+            }
+
             return await GetCartProductsAsync(
                 await _context.CartItems
-                .Where(ci => ci.UserId == _authService.GetUserId())
+                .Where(ci => ci.UserId == userId)
                 .ToListAsync());
         }
 

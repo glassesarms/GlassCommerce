@@ -4,7 +4,7 @@ namespace GlassCommerce.Client.Services.OrderService
 {
     public interface IOrderService
     {
-        Task PlaceOrder();
+        Task<string> PlaceOrder();
         Task<List<OrderOverviewDTO>> GetOrders();
         Task<OrderDetailsDTO> GetOrderDetails(int orderId);
      }

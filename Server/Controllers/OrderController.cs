@@ -14,13 +14,6 @@ namespace GlassCommerce.Server.Controllers
             _orderService = orderService;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<ServiceResponse<bool>>> PlaceOrder()
-        {
-            var result = await _orderService.PlaceOrderAsync();
-            return Ok(result);
-        }
-
         [HttpGet]
         public async Task<ActionResult<ServiceResponse<List<OrderOverviewDTO>>>> GetOrders()
         {

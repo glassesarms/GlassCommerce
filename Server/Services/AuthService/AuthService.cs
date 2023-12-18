@@ -23,7 +23,7 @@ namespace GlassCommerce.Server.Services.AuthService
             var response = new ServiceResponse<string>();
             var user = await _context.Users
                 .FirstOrDefaultAsync(x => x.Email.ToLower().Equals(email.ToLower()));
-            
+
             if (user == null)
             {
                 response.Success = false;
@@ -31,7 +31,7 @@ namespace GlassCommerce.Server.Services.AuthService
                 return response;
             }
 
-            if(!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
             {
                 response.Success = false;
                 response.Message = "Wrong password";
@@ -39,13 +39,13 @@ namespace GlassCommerce.Server.Services.AuthService
             }
 
             response.Data = CreateToken(user);
-            
+
             return response;
         }
 
         public async Task<ServiceResponse<int>> Register(User user, string password)
         {
-            if(await UserExists(user.Email))
+            if (await UserExists(user.Email))
             {
                 return new ServiceResponse<int>
                 {
@@ -62,8 +62,8 @@ namespace GlassCommerce.Server.Services.AuthService
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return new ServiceResponse<int> 
-            { 
+            return new ServiceResponse<int>
+            {
                 Data = user.Id,
                 Message = "Registration successful."
             };
@@ -71,7 +71,7 @@ namespace GlassCommerce.Server.Services.AuthService
 
         public async Task<bool> UserExists(string email)
         {
-            if(await _context.Users.AnyAsync(user => user.Email.ToLower()
+            if (await _context.Users.AnyAsync(user => user.Email.ToLower()
                 .Equals(email.ToLower())))
             {
                 return true;
@@ -92,7 +92,7 @@ namespace GlassCommerce.Server.Services.AuthService
 
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
-            using(var hmac = new HMACSHA512(passwordSalt))
+            using (var hmac = new HMACSHA512(passwordSalt))
             {
                 var computedHash = hmac
                     .ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
@@ -126,7 +126,7 @@ namespace GlassCommerce.Server.Services.AuthService
         public async Task<ServiceResponse<bool>> ChangePassword(int userId, string newPassword)
         {
             var user = await _context.Users.FindAsync(userId);
-            if(user == null)
+            if (user == null)
             {
                 return new ServiceResponse<bool>
                 {
@@ -143,12 +143,20 @@ namespace GlassCommerce.Server.Services.AuthService
             await _context.SaveChangesAsync();
 
             return new ServiceResponse<bool>
-            { 
+            {
                 Data = true,
                 Message = "Password has been changed."
             };
         }
 
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email.Equals(email));
+        }
+
         public int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+        public string GetUserEmail() => _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+
     }
 }
