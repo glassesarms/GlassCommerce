@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,17 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Shared\HomeButton.razor.css" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Shared\HomeButton.razor.css" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.25" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.20" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.20" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>

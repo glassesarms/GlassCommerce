@@ -10,8 +10,8 @@
 @code {
     private int GetCartItemsCount()
     {
-        var cart = SyncLocalStorage.GetItem<List<CartItem>>("cart");
-        return cart != null ? cart.Count : 0;
+        var count = SyncLocalStorage.GetItem<int>("cartItemsCount");
+        return count;
     }
 
     protected override void OnInitialized()
